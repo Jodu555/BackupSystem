@@ -1,8 +1,10 @@
 const fs = require('fs');
 
+const configPath = 'config.json';
+
 function load() {
     let config;
-    if (!fs.existsSync('../config.json')) {
+    if (!fs.existsSync(configPath)) {
         config = {
             lastBackup: -1,
             entrys: ['D:/'],
@@ -14,13 +16,13 @@ function load() {
             }
         }
     } else {
-        config = JSON.parse(fs.readFileSync('../config.json'));
+        config = JSON.parse(fs.readFileSync(configPath));
     }
     return config;
 }
 
 function save(config) {
-    fs.writeFileSync('../config.json', JSON.stringify(config, null, 3), 'utf-8');
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 3), 'utf-8');
 }
 
 module.exports = {

@@ -1,0 +1,12 @@
+{
+   "lastBackup": -1,
+   "entrys": [
+      "D:/"
+   ],
+   "server": {
+      "host": "localhost",
+      "user": "root",
+      "password": "yourPassword",
+      "destinationDirectory": "/media/all/BackupFlow/"
+   }
+}
