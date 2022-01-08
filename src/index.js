@@ -1,6 +1,8 @@
 const { CommandManager, Command } = require('@jodu555/command-manager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 
+
+
 commandManager.registerCommand(new Command('info', 'info', 'Displays Application Informations', (command, [...args], scope) => {
     //Prints Info
     return null;
