@@ -4,16 +4,8 @@ const partial = (config) => {
 
     config.entrys.forEach(entry => {
 
-        let list = fs.readdirSync(entry);
+        let list = getFiles(entry);
         console.log(list);
-        list.forEach(elem => {
-            try {
-                console.log(elem);
-                console.log(fs.statSync(path.join(entry, elem)));
-            } catch (error) {
-
-            }
-        });
 
     });
 };

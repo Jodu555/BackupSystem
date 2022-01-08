@@ -5,6 +5,7 @@ const commandManager = CommandManager.createCommandManager(process.stdin, proces
 const configManager = require('./configManager');
 const config = configManager.load();
 configManager.save(config);
+const BackupManager = require('./backupManager');
 
 
 commandManager.registerCommand(new Command('info', 'info', 'Displays Application Informations', (command, [...args], scope) => {
@@ -15,7 +16,7 @@ commandManager.registerCommand(new Command('info', 'info', 'Displays Application
 commandManager.registerCommand(new Command('make', 'make [partial:default/full]', 'Makes a Partial or Full Backup', async (command, [...args], scope) => {
     //Makes backup
 
-
+    BackupManager.partial(config);
 
     return null;
 }));
