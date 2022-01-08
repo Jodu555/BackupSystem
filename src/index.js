@@ -1,7 +1,8 @@
 const { CommandManager, Command } = require('@jodu555/command-manager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
-
-
+const configManager = require('./configManager')
+const config = configManager.load();
+configManager.save(config);
 
 commandManager.registerCommand(new Command('info', 'info', 'Displays Application Informations', (command, [...args], scope) => {
     //Prints Info
@@ -12,4 +13,6 @@ commandManager.registerCommand(new Command('make', 'make [partial:default/full]'
     //Makes backup
     return null;
 }));
+
+
 
