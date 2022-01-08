@@ -19,6 +19,6 @@
 	},
 	"homepage": "https://github.com/Jodu555/BackupSystem#readme",
 	"dependencies": {
-		"@jodu555/commandmanager": "^1.1.0"
+		"@jodu555/commandmanager": "^1.2.0"
 	}
 }

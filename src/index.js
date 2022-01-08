@@ -1,6 +1,6 @@
-const { CommandManager, Command } = require('@jodu555/command-manager');
+const { CommandManager, Command } = require('@jodu555/commandmanager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
-const configManager = require('./configManager')
+const configManager = require('./configManager');
 const config = configManager.load();
 configManager.save(config);
 

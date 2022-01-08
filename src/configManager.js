@@ -23,7 +23,7 @@ function save(config) {
     fs.writeFileSync('../config.json', JSON.stringify(config, null, 3), 'utf-8');
 }
 
-module.export = {
+module.exports = {
     load,
     save
 }
