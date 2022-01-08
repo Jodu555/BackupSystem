@@ -1,3 +1,4 @@
+const fs = require('fs');
 
 const partial = (config) => {
     const backupPaths = [];
