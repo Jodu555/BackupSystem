@@ -1,0 +1,23 @@
+{
+  "name": "backupsystem",
+  "version": "1.0.0",
+  "description": "A BackupSystem written in node wich implements the way of a partial backup!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jodu555/BackupSystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jodu555/BackupSystem/issues"
+  },
+  "homepage": "https://github.com/Jodu555/BackupSystem#readme",
+  "dependencies": {
+    "@jodu555/commandmanager": "^1.1.0"
+  }
+}
