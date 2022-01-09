@@ -12,13 +12,13 @@ const partial = (config) => {
     });
 };
 
-const getFiles = (path) => {
-    let list = fs.readdirSync(path);
+const getFiles = (listPath) => {
+    let list = fs.readdirSync(listPath);
     list.forEach(elem => {
         try {
-            console.log(fs.statSync(path.join(path, elem)).isDirectory());
-            if (fs.statSync(path.join(path, elem)).isDirectory()) {
-                list.concat(getFiles(path.join(path, elem)));
+            console.log(fs.statSync(path.join(listPath, elem)).isDirectory());
+            if (fs.statSync(path.join(listPath, elem)).isDirectory()) {
+                list = list.concat(getFiles(path.join(listPath, elem)));
             } else {
                 list.push(path.join(elem));
             }
