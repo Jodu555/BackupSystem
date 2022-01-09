@@ -21,11 +21,11 @@ const getFiles = (matcher, listPath) => {
     list = list.map(e => path.join(listPath, e));
     list.forEach(elem => {
         try {
-            if (fs.statSync(elem).isDirectory() && !matcher.dir.match(elem)) {
-
-                list = list.concat(getFiles(matcher, elem));
+            if (fs.statSync(elem).isDirectory()) {
+                if (!matcher.dir.test(elem))
+                    list = list.concat(getFiles(matcher, elem));
             } else {
-                if (!matcher.file.match(elem))
+                if (!matcher.file.test(elem))
                     list.push(elem);
             }
         } catch (error) {
