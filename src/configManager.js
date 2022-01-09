@@ -8,6 +8,10 @@ function load() {
         config = {
             lastBackup: -1,
             entrys: ['D:/'],
+            excluding: {
+                dirs: ['node_modules'],
+                files: ['.env']
+            },
             server: {
                 host: 'localhost',
                 user: 'root',
