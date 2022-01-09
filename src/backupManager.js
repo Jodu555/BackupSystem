@@ -14,12 +14,13 @@ const partial = (config) => {
 
 const getFiles = (listPath) => {
     let list = fs.readdirSync(listPath);
+    list = list.map(e => path.join(listPath, e));
     list.forEach(elem => {
         try {
-            if (fs.statSync(path.join(listPath, elem)).isDirectory()) {
-                list = list.concat(getFiles(path.join(listPath, elem)));
+            if (fs.statSync(elem).isDirectory()) {
+                list = list.concat(getFiles(elem));
             } else {
-                list.push(path.join(listPath, elem));
+                list.push(elem);
             }
         } catch (error) {
             console.log(error);
