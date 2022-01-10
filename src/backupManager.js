@@ -25,13 +25,9 @@ const getFiles = (matcher, listPath) => {
     list.forEach(elem => {
         try {
             if (fs.statSync(elem).isDirectory()) {
-                // if (!matcher.dir.test(elem)) {
                 list = list.concat(getFiles(matcher, elem));
-                // }
             } else {
-                // if (!matcher.file.test(elem) && !matcher.dir.test(elem)) {
                 list.push(elem);
-                // }
             }
         } catch (error) {
             console.log(error);
