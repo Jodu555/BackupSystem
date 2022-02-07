@@ -51,26 +51,6 @@ const partial = async (config) => {
     ssh.dispose();
 };
 
-// const getFiles = (matcher, listPath, filter) => {
-//     let list = fs.readdirSync(listPath);
-//     list = list.map(e => path.join(listPath, e));
-//     list = list.filter(e => !matcher.dir.test(e) && !matcher.file.test(e))
-
-//     list.forEach(elem => {
-//         try {
-//             if (fs.statSync(elem).isDirectory()) {
-//                 list = list.concat(getFiles(matcher, elem));
-//             } else {
-//                 list.push(elem);
-//             }
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     });
-//     list = [...new Set(list)];
-//     return list;
-// }
-
 const listFiles = (lcPath, rmPath, matcher, filter) => {
     const files = [];
     fs.readdirSync(lcPath)
