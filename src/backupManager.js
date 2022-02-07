@@ -1,37 +1,46 @@
 const fs = require('fs');
 const path = require('path');
+const { NodeSSH } = require('node-ssh');
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const partial = async (config) => {
     const backupPaths = [];
 
+    const ssh = new NodeSSH();
+    await ssh.connect({
+
+    });
+
     const matcher = {
         dir: new RegExp(config.excluding.dirs.join('|'), 'gi'),
         file: new RegExp(config.excluding.files.join('|'), 'gi'),
     };
     for (const entry of config.entrys) {
-        let list = listFiles(entry, '/home/Backup', matcher, (elemPath) => {
+        let list = listFiles(entry, '/home/BU-TEST', matcher, (elemPath) => {
             console.log(fs.statSync(list[0]));
             return true;
         });
+        const perChunk = 50;
         list = list.reduce((resultArray, item, index) => {
-            const chunkIndex = Math.floor(index / 10);
+            const chunkIndex = Math.floor(index / perChunk);
             if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
             resultArray[chunkIndex].push(item);
             return resultArray
         }, [])
-        console.log(`Info: ${list.length} Chunk's with 10 items per Chunk!`);
+        console.log(`Info: ${list.length} Chunk's with ${perChunk} items per Chunk!`);
         console.log('Started to Upload!');
 
         let i = 0;
-        for (const chunk of list) {
+        for (let chunk of list) {
             i++;
             console.log(`Uploading Chunk Nr. ${i} of ${list.length}`);
-            await delay(1000)
+            chunk = chunk.map(e => { console.log(e); return { lc: e.local, rm: e.remote } })
+            return;
         }
 
     }
+    ssh.dispose();
 };
 
 // const getFiles = (matcher, listPath, filter) => {
