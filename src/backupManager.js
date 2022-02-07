@@ -8,18 +8,22 @@ const partial = (config) => {
         dir: new RegExp(config.excluding.dirs.join('|'), 'gi'),
         file: new RegExp(config.excluding.files.join('|'), 'gi'),
     };
-    // console.log(matcher);
-    // console.log(matcher.dir.test('D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\AmazonPriceTracker\\node_modules\\concat-map'));
-    // return;
     config.entrys.forEach(entry => {
         let list = getFiles(matcher, entry, (elemPath) => {
             console.log(fs.statSync(list[0]));
             return true;
         });
+        list = list.reduce((resultArray, item, index) => {
+            const chunkIndex = Math.floor(index / 10);
+            if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
+            resultArray[chunkIndex].push(item);
+            return resultArray
+        }, [])
         console.log(list);
-        console.log(fs.statSync(list[0]));
+        // console.log(fs.statSync(list[0]));
 
     });
+    return '';
 };
 
 const getFiles = (matcher, listPath, filter) => {
