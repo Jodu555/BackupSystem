@@ -6,18 +6,17 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const partial = async (config) => {
     const backupPaths = [];
-
+    const remote = config.destinationDirectory;
+    delete config.destinationDirectory;
     const ssh = new NodeSSH();
-    await ssh.connect({
-
-    });
+    await ssh.connect(config.server);
 
     const matcher = {
         dir: new RegExp(config.excluding.dirs.join('|'), 'gi'),
         file: new RegExp(config.excluding.files.join('|'), 'gi'),
     };
     for (const entry of config.entrys) {
-        let list = listFiles(entry, '/home/BU-TEST', matcher, (elemPath) => {
+        let list = listFiles(entry, remote, matcher, (elemPath) => {
             console.log(fs.statSync(list[0]));
             return true;
         });
@@ -37,7 +36,7 @@ const partial = async (config) => {
         for (let chunk of list) {
             i++;
             console.log(`Uploading Chunk Nr. ${i} of ${list.length}`);
-            chunk = chunk.map(e => { return { lc: e.local, rm: e.remote } })
+            chunk = chunk.map(e => { return { local: e.lc, remote: e.rm } })
             await ssh.putFiles(chunk).then(() => {
                 succeeded.push(chunk)
             }, (error) => {
