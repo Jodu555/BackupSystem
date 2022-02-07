@@ -32,12 +32,21 @@ const partial = async (config) => {
         console.log('Started to Upload!');
 
         let i = 0;
+        const failed = [];
+        const succeeded = [];
         for (let chunk of list) {
             i++;
             console.log(`Uploading Chunk Nr. ${i} of ${list.length}`);
-            chunk = chunk.map(e => { console.log(e); return { lc: e.local, rm: e.remote } })
-            return;
+            chunk = chunk.map(e => { return { lc: e.local, rm: e.remote } })
+            await ssh.putFiles(chunk).then(() => {
+                succeeded.push(chunk)
+            }, (error) => {
+                failed.push({ ...chunk, error });
+            });
+            console.log('  Finished!');
         }
+
+        console.log(`Finish Informations: Succedded: ${succeeded.length} & Failed: ${failed.length}`);
 
     }
     ssh.dispose();
