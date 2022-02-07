@@ -16,9 +16,9 @@ commandManager.registerCommand(new Command('info', 'info', 'Displays Application
 commandManager.registerCommand(new Command('make', 'make [partial:default/full]', 'Makes a Partial or Full Backup', async (command, [...args], scope) => {
     //Makes backup
 
-    BackupManager.partial(config);
+    await BackupManager.partial(config);
 
-    return null;
+    return '';
 }));
 
 //TODO: Some config editing commands: load, save, edit
