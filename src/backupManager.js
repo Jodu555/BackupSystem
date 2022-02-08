@@ -20,36 +20,41 @@ const partial = async (config) => {
             console.log(fs.statSync(list[0]));
             return true;
         });
-        const perChunk = 50;
-        list = list.reduce((resultArray, item, index) => {
-            const chunkIndex = Math.floor(index / perChunk);
-            if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
-            resultArray[chunkIndex].push(item);
-            return resultArray
-        }, [])
-        console.log(`Info: ${list.length} Chunk's with ${perChunk} items per Chunk!`);
-        console.log('Started to Upload!');
 
-        let i = 0;
-        const failed = [];
-        const succeeded = [];
-        for (let chunk of list) {
-            i++;
-            console.log(`Uploading Chunk Nr. ${i} of ${list.length}`);
-            chunk = chunk.map(e => { return { local: e.lc, remote: e.rm } })
-            await ssh.putFiles(chunk).then(() => {
-                succeeded.push(chunk)
-            }, (error) => {
-                failed.push({ ...chunk, error });
-            });
-            console.log('  Finished!');
-        }
-
-        console.log(`Finish Informations: Succedded: ${succeeded.length} & Failed: ${failed.length}`);
+        await upload(list);
 
     }
     ssh.dispose();
 };
+
+const upload = async (list) => {
+    const perChunk = 50;
+    list = list.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / perChunk);
+        if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
+        resultArray[chunkIndex].push(item);
+        return resultArray
+    }, [])
+    console.log(`Info: ${list.length} Chunk's with ${perChunk} items per Chunk!`);
+    console.log('Started to Upload!');
+
+    let i = 0;
+    const failed = [];
+    const succeeded = [];
+    for (let chunk of list) {
+        i++;
+        console.log(`Uploading Chunk Nr. ${i} of ${list.length}`);
+        chunk = chunk.map(e => { return { local: e.lc, remote: e.rm } })
+        await ssh.putFiles(chunk).then(() => {
+            succeeded.push(chunk)
+        }, (error) => {
+            failed.push({ ...chunk, error });
+        });
+        console.log('  Finished!');
+    }
+
+    console.log(`Finish Informations: Succedded: ${succeeded.length} & Failed: ${failed.length}`);
+}
 
 const listFiles = (lcPath, rmPath, matcher, filter) => {
     const files = [];
