@@ -29,12 +29,8 @@ const partial = async (config) => {
 
 const upload = async (list) => {
     const perChunk = 50;
-    list = list.reduce((resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / perChunk);
-        if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
-        resultArray[chunkIndex].push(item);
-        return resultArray
-    }, [])
+    list = chunkIt(list, perChunk);
+
     console.log(`Info: ${list.length} Chunk's with ${perChunk} items per Chunk!`);
     console.log('Started to Upload!');
 
@@ -70,6 +66,16 @@ const listFiles = (lcPath, rmPath, matcher, filter) => {
             }
         });
     return files;
+}
+
+const chunkIt = (list, size) => {
+    list = list.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / perChunk);
+        if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
+        resultArray[chunkIndex].push(item);
+        return resultArray
+    }, [])
+    return list;
 }
 
 
