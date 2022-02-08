@@ -17,8 +17,8 @@ const partial = async (config) => {
     };
     for (const entry of config.entrys) {
         let list = listFiles(entry, remote, matcher, (elemPath) => {
-            console.log(fs.statSync(list[0]));
-            return true;
+            const modTime = new Date(fs.statSync(elemPath).mtime).getTime();
+            return (modTime - config.lastBackup > 0);
         });
 
         await upload(list);
@@ -55,7 +55,7 @@ const upload = async (list) => {
 const listFiles = (lcPath, rmPath, matcher, filter) => {
     const files = [];
     fs.readdirSync(lcPath)
-        .filter(e => !matcher.dir.test(e) && !matcher.file.test(e) && console.log)
+        .filter(e => !matcher.dir.test(e) && !matcher.file.test(e) && filter(path.join(lcPath, e)))
         .map(e => { return { name: e, path: path.join(lcPath, e) } })
         .forEach(entity => {
             // console.log(entity.path, !matcher.dir.test(entity.path) && !matcher.file.test(entity.path));

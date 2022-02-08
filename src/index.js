@@ -22,5 +22,3 @@ commandManager.registerCommand(new Command('make', 'make [partial:default/full]'
 }));
 
 //TODO: Some config editing commands: load, save, edit
-
-
