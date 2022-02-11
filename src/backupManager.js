@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { NodeSSH } = require('node-ssh');
+const { CommandManager } = require('@jodu555/commandmanager');
+const commandManager = CommandManager.getCommandManager();
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -39,16 +41,16 @@ const upload = async (list) => {
     const succeeded = [];
     for (let chunk of list) {
         i++;
-        console.log(`Uploading Chunk Nr. ${i} of ${list.length}`);
+        commandManager.getWriter().deepSameLineClear(`Uploading Chunk Nr. ${i} of ${list.length}`);
         chunk = chunk.map(e => { return { local: e.lc, remote: e.rm } })
         await ssh.putFiles(chunk).then(() => {
-            succeeded.push(chunk)
+            succeeded.push(chunk);
+            commandManager.getWriter().deepSameLineClear(`Uploading Chunk Nr. ${i} of ${list.length} : ${succeeded.length} / ${chunk.length}`);
         }, (error) => {
             failed.push({ ...chunk, error });
         });
-        console.log('  Finished!');
     }
-
+    commandManager.getWriter().end();
     console.log(`Finish Informations: Succedded: ${succeeded.length} & Failed: ${failed.length}`);
 }
 
