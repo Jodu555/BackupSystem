@@ -7,6 +7,14 @@ const commandManager = CommandManager.getCommandManager();
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const partial = async (config) => {
+    deepUpload((elemPath) => {
+        const modTime = new Date(fs.statSync(elemPath).mtime).getTime();
+        return (modTime - config.lastBackup > 0);
+    });
+};
+
+
+const deepUpload = (filterCb) => {
     const backupPaths = [];
     const remote = config.destinationDirectory;
     delete config.destinationDirectory;
@@ -18,16 +26,13 @@ const partial = async (config) => {
         file: new RegExp(config.excluding.files.join('|'), 'gi'),
     };
     for (const entry of config.entrys) {
-        let list = listFiles(entry, remote, matcher, (elemPath) => {
-            const modTime = new Date(fs.statSync(elemPath).mtime).getTime();
-            return (modTime - config.lastBackup > 0);
-        });
+        let list = listFiles(entry, remote, matcher, filterCb);
 
         await upload(list);
 
     }
     ssh.dispose();
-};
+}
 
 const upload = async (list) => {
     const perChunk = 50;
