@@ -19,6 +19,8 @@ commandManager.registerCommand(new Command('make', 'make [partial:default/full]'
         await BackupManager.full(config);
     } else {
         await BackupManager.partial(config);
+        config.lastBackup = Date.now();
+        configManager.save(config);
     }
     return '';
 }));

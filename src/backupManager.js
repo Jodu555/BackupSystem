@@ -7,20 +7,20 @@ const commandManager = CommandManager.getCommandManager();
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const partial = async (config) => {
-    await deepUpload((elemPath) => {
+    await deepUpload(config, (elemPath) => {
         const modTime = new Date(fs.statSync(elemPath).mtime).getTime();
         return (modTime - config.lastBackup > 0);
     });
 };
 
 const full = async (config) => {
-    await deepUpload(_ => {
+    await deepUpload(config, _ => {
         return true;
     });
 };
 
 
-const deepUpload = async (filterCb) => {
+const deepUpload = async (config, filterCb) => {
     const backupPaths = [];
     const remote = config.destinationDirectory;
     delete config.destinationDirectory;
