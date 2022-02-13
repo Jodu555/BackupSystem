@@ -13,6 +13,12 @@ const partial = async (config) => {
     });
 };
 
+const full = async (config) => {
+    deepUpload(_ => {
+        return true;
+    });
+};
+
 
 const deepUpload = (filterCb) => {
     const backupPaths = [];
