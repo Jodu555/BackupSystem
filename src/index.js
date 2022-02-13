@@ -15,13 +15,11 @@ commandManager.registerCommand(new Command('info', 'info', 'Displays Application
 
 commandManager.registerCommand(new Command('make', 'make [partial:default/full]', 'Makes a Partial or Full Backup', async (command, [...args], scope) => {
     //Makes backup
-    if (arg[1] == 'full' || arg[1] == 'f') {
-
+    if (args[1] == 'full' || args[1] == 'f') {
+        await BackupManager.full(config);
     } else {
-
         await BackupManager.partial(config);
     }
-
     return '';
 }));
 
