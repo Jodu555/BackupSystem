@@ -94,4 +94,5 @@ const chunkIt = (list, size) => {
 
 module.exports = {
     partial,
+    full
 }
