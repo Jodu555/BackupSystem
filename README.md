@@ -15,4 +15,4 @@ Implemented in NodeJs to give more flexibility
 - [ ] Rollback: A Full Rollback system from all the files and the folder structure
 - [ ] Time Rollback: A Rollback to a specific time
 - [ ] Implement a file watching system
-  - [ ] When files gets updated upload it automatically
+  - [ ] When files gets updated upload it automatically: More of an Keep in Sync than an actual Backup plan
