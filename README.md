@@ -14,5 +14,7 @@ Implemented in NodeJs to give more flexibility
 - [ ] Full Backup: A Full Backup from all the files and the folder structure
 - [ ] Rollback: A Full Rollback system from all the files and the folder structure
 - [ ] Time Rollback: A Rollback to a specific time
+- [ ] Setup all the config stuff in seperate objects
+  - [ ] Move the excluding stuff into the single tasks
 - [ ] Implement a file watching system
   - [ ] When files gets updated upload it automatically: More of an Keep in Sync than an actual Backup plan
