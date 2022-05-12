@@ -13,7 +13,7 @@ commandManager.registerCommand(new Command('info', 'info', 'Displays Application
     return null;
 }));
 
-commandManager.registerCommand(new Command('make', 'make [partial:default/full]', 'Makes a Partial or Full Backup', async (command, [...args], scope) => {
+commandManager.registerCommand(new Command(['make', 'm'], 'make [partial:default/full]', 'Makes a Partial or Full Backup', async (command, [...args], scope) => {
     //Makes backup
     if (args[1] == 'full' || args[1] == 'f') {
         await BackupManager.full(config);
