@@ -36,13 +36,13 @@ const deepUpload = async (config, filterCb) => {
     for (const entry of config.entrys) {
         let list = listFiles(entry, remote, matcher, filterCb);
 
-        await upload(list);
+        await upload(ssh, list);
 
     }
     ssh.dispose();
 }
 
-const upload = async (list) => {
+const upload = async (ssh, list) => {
     const perChunk = 50;
     list = chunkIt(list, perChunk);
 
@@ -54,7 +54,6 @@ const upload = async (list) => {
     const succeeded = [];
     for (let chunk of list) {
         i++;
-        console.log(commandManager);
         commandManager.getWriter().deepSameLineClear(`Uploading Chunk Nr. ${i} of ${list.length}`);
         chunk = chunk.map(e => { return { local: e.lc, remote: e.rm } })
         await ssh.putFiles(chunk).then(() => {
