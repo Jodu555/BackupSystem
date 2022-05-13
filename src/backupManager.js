@@ -7,6 +7,7 @@ const commandManager = CommandManager.getCommandManager();
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const partial = async (config) => {
+    console.log('PARTIAL', config);
     await deepUpload(config, (elemPath) => {
         const modTime = new Date(fs.statSync(elemPath).mtime).getTime();
         return (modTime - config.lastBackup > 0);
@@ -14,6 +15,7 @@ const partial = async (config) => {
 };
 
 const full = async (config) => {
+    console.log('FULL', config);
     await deepUpload(config, _ => {
         return true;
     });
@@ -22,7 +24,7 @@ const full = async (config) => {
 
 const deepUpload = async (config, filterCb) => {
     const backupPaths = [];
-    const remote = config.destinationDirectory;
+    const remote = config.server.destinationDirectory;
     delete config.destinationDirectory;
     const ssh = new NodeSSH();
     await ssh.connect(config.server);
@@ -73,6 +75,7 @@ const listFiles = (lcPath, rmPath, matcher, filter) => {
         .forEach(entity => {
             // console.log(entity.path, !matcher.dir.test(entity.path) && !matcher.file.test(entity.path));
             if (fs.statSync(entity.path).isDirectory()) {
+                console.log(rmPath, entity);
                 files.push(...listFiles(path.join(entity.path), path.join(rmPath, entity.name), matcher, filter));
             } else {
                 files.push({ lc: entity.path, rm: path.join(rmPath, entity.name) });
@@ -81,7 +84,7 @@ const listFiles = (lcPath, rmPath, matcher, filter) => {
     return files;
 }
 
-const chunkIt = (list, size) => {
+const chunkIt = (list, perChunk) => {
     list = list.reduce((resultArray, item, index) => {
         const chunkIndex = Math.floor(index / perChunk);
         if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
