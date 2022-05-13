@@ -49,7 +49,7 @@ const upload = async (ssh, list) => {
 
     console.log(`Info: ${list.length} Chunk's with ${perChunk} items per Chunk!`);
     console.log('Started to Upload!');
-    return;
+    // return;
     let i = 0;
     const failed = [];
     const succeeded = [];
