@@ -34,6 +34,7 @@ const deepUpload = async (config, filterCb) => {
         file: new RegExp(config.excluding.files.join('|'), 'gi'),
     };
     for (const entry of config.entrys) {
+        console.log('  From: ' + entry);
         let list = listFiles(entry, remote, matcher, filterCb);
 
         await upload(ssh, list);

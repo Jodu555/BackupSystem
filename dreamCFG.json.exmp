@@ -1,0 +1,41 @@
+{
+	"global": {
+		"excluding": {
+			"dirs": [
+				"node_modules",
+				".git"
+			],
+			"files": [
+				".env",
+				"package-lock.json"
+			]
+		}
+	},
+	"tasks": [
+		{
+			"lastBackup": 1652419700527,
+			"entrys": [
+				"E://Test//Deep//Sub//Folder//Taddl"
+			],
+			"excluding": {
+				"dirs": [
+					"node_modules",
+					".git"
+				],
+				"files": [
+					".env",
+					"package-lock.json"
+				]
+			}
+		}
+	],
+	"servers": [
+		{
+			"name": "TEST 18 GB",
+			"host": "IP",
+			"username": "root",
+			"password": "dsdsd",
+			"destinationDirectory": "/home/BU-TEST"
+		}
+	]
+}
