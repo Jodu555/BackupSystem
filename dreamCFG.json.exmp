@@ -13,6 +13,9 @@
 	},
 	"tasks": [
 		{
+			"_comment": "Type: Sync means just that the backup process is more a synchronization so a backup which runs on a static time",
+			"_commen2t": "the normal backups should run if the user decides to (by command)",
+			"type": "SYNC",
 			"lastBackup": 1652419700527,
 			"entrys": [
 				"E://Test//Deep//Sub//Folder//Taddl"
@@ -26,7 +29,9 @@
 					".env",
 					"package-lock.json"
 				]
-			}
+			},
+			"targetServer": "TEST 18 GB",
+			"targertDirectory": "/home/BU-TEST"
 		}
 	],
 	"servers": [
@@ -34,8 +39,7 @@
 			"name": "TEST 18 GB",
 			"host": "IP",
 			"username": "root",
-			"password": "dsdsd",
-			"destinationDirectory": "/home/BU-TEST"
+			"password": "dsdsd"
 		}
 	]
 }
